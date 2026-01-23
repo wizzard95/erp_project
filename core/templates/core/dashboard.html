@@ -84,9 +84,7 @@
         {% endif %}
     </div>
 
-    {% if permissions.customers == 0 and permissions.suppliers == 0 and permissions.materials == 0 
-    and permissions.purchases == 0 and permissions.sales == 0 and permissions.inventory == 0
-    and permissions.accounting == 0 and permissions.reporting == 0 %}
+    {% if permissions.customers == 0 and permissions.suppliers == 0 and permissions.materials == 0 and permissions.purchases == 0 and permissions.sales == 0 and permissions.inventory == 0 and permissions.accounting == 0 and permissions.reporting == 0 %}
 
     <div style="border: 1px solid red; padding: 10px; margin-top: 20px;">
         <h4>No permissions assigned</h4>

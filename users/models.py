@@ -25,9 +25,7 @@ class Role(models.Model):
         (2, 'Create and modify'),
     ]
 
-# ? definir los modulos y los permisos 
-
-    role_name = models.CharField(max_length=50, primary_key=True)
+    role_name = models.CharField(max_length=50, unique=True)
     customers = models.IntegerField(choices = PERMISION_CHOICES, default=0)
     suppliers = models.IntegerField(choices = PERMISION_CHOICES, default=0)
     materials = models.IntegerField(choices = PERMISION_CHOICES, default=0)
