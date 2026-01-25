@@ -1,0 +1,46 @@
+{% load static %}
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ERP JM{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+ </head>
+ <body class="bg-gray-100 font-sans">
+
+    <nav class="bg-[#233b6e] text-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex flex-col md-flex-row justify-between items-center space-y-4 md:space-y-0">
+
+            <a href="{% url 'dashboard' %}" class="text-2xl font-bold rounded-lg px-2 py-1 transition-all hover:bg-white/10">
+                <img src="{% static 'img/logo.svg' %}" alt="ERP JM" class="h-8 w-8">
+                <span>ERP JM</span>
+            </a>
+
+            <div class="relative w-full md:w-1/2">
+                <input type="text" 
+                id="transaction-input" 
+                class="w-full bg-white/20 text-white rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-gray-300">
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <div id="nav-links-desktop" class="hidden md:flex space-x-6">
+
+                </div>
+
+                <div class="relative">
+                    <button id="user-menu-button" 
+                    class="flex items-center space-x-2 text-lg font-medium transition-all hover:bg-white/10 p-2 rounded-lg">
+                        <span>{{ user.first_name|default:user.username }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"</svg>
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    </nav>
+    
+ </body>
+ </html>
