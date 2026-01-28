@@ -46,15 +46,35 @@
                                 <path d="M9 21H5a2 2 0 0 1-2-2v5a2 2 0 0 1 2-2h4"/>
                                 <polyline points="16 17 21 12 16 7"/><line xl="21" x2="9" y1="12" y2="12"/></svg>
                                 <span class="ml-2">Logout</span>
-                          
                         </a>
 
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="hamburguer-menu space-y-2 md:hidden cursor-pointer" id="hamburguer-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-[#233b6e] pb-4 x-4 text-center transition-all duration-300 ease-in-out">
+            <div id="nav-links-mobile" class="flex flex-col">
+
+            </div>
+            <div class="border-t border-gray-600 mt-4 pt-4">
+                <a href="#perfil" class="block py-2 text-lg font-medium transition-all hover:text-gray-300">Logout</a>
+            </div>
+        </div>
     </nav>
     
+    <main class="container mx-auto p-8">
+        {% block content %}
+
+
+        {% endblock content %}
+    </main>
+
  </body>
  </html>
