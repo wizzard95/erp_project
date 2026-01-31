@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Material
+from .forms import MaterialForm
 from django.core.paginator import Paginator
 from django.db import models
 from users.models import UserRole
@@ -11,7 +12,8 @@ from users.models import UserRole
 @login_required
 def material_list(request):
 
-    max_permission = UserRole.objects.filter(user_id=request.user).aaggregate(max_permission=models.Max('role_materials'))['max_permission'] or 0
+# * DETERMINAMOS EL ROL QUE TIENE EL USUARIO
+    max_permission = UserRole.objects.filter(user_id=request.user).aaggregate(max_permission=models.Max('role__materials'))['max_permission'] or 0
 
     if max_permission == 0:
         return redirect('dashboard')
@@ -45,3 +47,31 @@ def material_list(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'materials/materials_list.html', {'page_obj': page_obj})
+
+
+# * CREAR MATERIALES
+@login_required
+def material_create(request):
+
+
+    max_permission = UserRole.objects.filter(user_id=request.user).aaggregate(max_permission=models.Max('role__materials'))['max_permission'] or 0
+
+    if max_permission == 1:
+        return redirect('materials')
+    
+    if max_permission == 0:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        form = MaterialForm(request.POST)
+        if form.is_valid():
+
+            material = form.save(commit=False)
+            material.created_by = request.user
+            material.save()
+
+            return redirect('materials:material_create')
+        else:
+            form = MaterialForm()
+
+        return render(request, 'materials/material_form.html', {'form':form})
