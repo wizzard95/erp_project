@@ -10,10 +10,10 @@ from users.models import UserRole
 
 # * listar materiales
 @login_required
-def material_list(request):
+def materials_list(request):
 
 # * DETERMINAMOS EL ROL QUE TIENE EL USUARIO
-    max_permission = UserRole.objects.filter(user_id=request.user).aaggregate(max_permission=models.Max('role__materials'))['max_permission'] or 0
+    max_permission = UserRole.objects.filter(user_id=request.user).aggregate(max_permission=models.Max('role__materials'))['max_permission'] or 0
 
     if max_permission == 0:
         return redirect('dashboard')
@@ -42,7 +42,7 @@ def material_list(request):
         materials_list = materials_list.filter(status=status)
 
     
-    paginator = Paginator(material_list,10)
+    paginator = Paginator(materials_list,10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
