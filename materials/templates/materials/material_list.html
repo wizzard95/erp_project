@@ -98,9 +98,39 @@
             &lsaquo;
         </a>
         {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+        {% if page_obj.number == i %}
+        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-gray-200 text-sm font-medium text-gray-700">
+            {{ i }}
+        </span>
+        {% else %}
+        <a href="?page={{ i }}&id_material={{request.GET.id_material}}&name={{request.Get.name}}&material_type={{request.GET.material_type}}&status={{request.GET.status}}"
+        class="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+        >
+            {{ i }}
+        </a>
+        {% endif %}
+        {% endfor %}
+
+        {% if pago_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&id_material={{request.GET.id_material}}&name={{request.Get.name}}&material_type={{request.GET.material_type}}&status={{request.GET.status}}"
+        class="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+        >
+            <span class="sr-only">Next</span>
+            &rsaquo;
+        </a>
+
+        <a href="?page={{ page_obj.paginator.num_pages }}&id_material={{request.GET.id_material}}&name={{request.Get.name}}&material_type={{request.GET.material_type}}&status={{request.GET.status}}"
+        class="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+        >
+            <span class="sr-only">Last</span>
+            &rsaquo;
+        </a>
+        {% endif %}
     </nav>
 </div>
-
+{% endif %}
 </div>
 
 
