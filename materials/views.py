@@ -54,7 +54,7 @@ def materials_list(request):
 def material_create(request):
 
 
-    max_permission = UserRole.objects.filter(user_id=request.user).aaggregate(max_permission=models.Max('role__materials'))['max_permission'] or 0
+    max_permission = UserRole.objects.filter(user_id=request.user).aggregate(max_permission=models.Max('role__materials'))['max_permission'] or 0
 
     if max_permission == 1:
         return redirect('materials')
@@ -71,7 +71,7 @@ def material_create(request):
             material.save()
 
             return redirect('materials:material_create')
-        else:
-            form = MaterialForm()
+    else:
+        form = MaterialForm()
 
-        return render(request, 'materials/material_form.html', {'form':form})
+    return render(request, 'materials/material_form.html', {'form':form})
