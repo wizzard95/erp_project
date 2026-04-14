@@ -49,7 +49,7 @@ def materials_list(request):
     return render(request, 'materials/materials_list.html', {'page_obj': page_obj})
 
 
-# * CREAR MATERIALES
+# * CREAR MATERIALESy
 @login_required
 def material_create(request):
 
