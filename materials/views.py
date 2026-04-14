@@ -129,3 +129,21 @@ def material_edit(request, pk):
         }
         # ? renderizamos con toda la informacion 
     return render(request, 'materials/material_form.html', context)
+
+@login_required
+def material_delete(request, pk):
+
+    max_permission = UserRole.objects.filter(user_id=request.user).aggregate(max_permission=models.Max('role__materials'))['max_permission'] or 0
+    
+    if max_permission < 2:
+        return redirect('materials:material_list')
+    
+    material = get_object_or_404(Material,pk=pk)
+
+    if request.method == 'POST':
+        material.delete()
+        return redirect('materials:materials_list')
+    
+    return redirect('materials:materials_list')
+
+       
