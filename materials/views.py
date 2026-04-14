@@ -35,9 +35,6 @@ def materials_list(request):
     if material_type:
         materials_list = materials_list.filter(material_type__icontains=material_type)
 
-    if material_type:
-        materials_list = materials_list.filter(material_type__icontains=material_type)
-
     if status is not None and status !='':
         materials_list = materials_list.filter(status=status)
 
