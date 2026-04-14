@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Material
 from .forms import MaterialForm
 from django.core.paginator import Paginator
+from django.http import HttpResponse
+import csv
 from django.db import models
 from users.models import UserRole
 
@@ -38,6 +40,30 @@ def materials_list(request):
     if status is not None and status !='':
         materials_list = materials_list.filter(status=status)
 
+    # ? logica para exportar a cvs
+    if request.GET.get('export') == 'csv':
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="materials.csv"'
+
+        response.write('\uffef'.encode('utf-8'))
+        writer = csv.writer(response)
+
+        writer.writerow(['ID Material', 'Name', 'Description', 'Unit', 'Type', 'Status', 'Created By', 'Created At', 'Updated At'])
+
+        for material in materials_list:
+            writer.writerow([
+                material.id_material,
+                material.name,
+                material.description,
+                material.unit,
+                material.material_type,
+                material.status,
+                material.created_by.username if material.created_by else 'N/A',
+                material.create_at.strftime('%Y-%m-%d %H:%M:%S'),
+                  material.update_at.strftime('%Y-%m-%d %H:%M:%S'),
+            ])
+        return response
+
     
     paginator = Paginator(materials_list,10)
     page_number = request.GET.get('page')
@@ -46,7 +72,7 @@ def materials_list(request):
     return render(request, 'materials/materials_list.html', {'page_obj': page_obj})
 
 
-# * CREAR MATERIALESy
+# * CREAR MATERIALES
 @login_required
 def material_create(request):
 
