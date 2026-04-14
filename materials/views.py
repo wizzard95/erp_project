@@ -60,7 +60,7 @@ def materials_list(request):
                 material.status,
                 material.created_by.username if material.created_by else 'N/A',
                 material.create_at.strftime('%Y-%m-%d %H:%M:%S'),
-                  material.update_at.strftime('%Y-%m-%d %H:%M:%S'),
+                material.update_at.strftime('%Y-%m-%d %H:%M:%S'),
             ])
         return response
 
@@ -98,3 +98,34 @@ def material_create(request):
         form = MaterialForm()
 
     return render(request, 'materials/material_form.html', {'form':form})
+
+
+@login_required
+def material_edit(request, pk):
+
+# ! definimos la variable que sera el objeto donde obtendremos el material
+    material = get_object_or_404(Material,pk=pk)
+
+  # ? implementamos la logica de permisos
+    max_permission = UserRole.objects.filter(user_id=request.user).aggregate(max_permission=models.Max('role__materials'))['max_permission'] or 0
+
+    if max_permission == 1:
+        return redirect('materials')
+    if max_permission == 0:
+        return redirect('dashboard')
+    
+    # ? validacion del formulario
+    if request.method == 'POST':
+        form = MaterialForm(request.POST, instance=material)
+        if form.is_valid():
+            form.save()
+            return redirect('materials:materials_list')
+        else:
+            form = MaterialForm(instance=material)
+
+        context = {
+            'form': form,
+            'material': material,
+        }
+        # ? renderizamos con toda la informacion 
+    return render(request, 'materials/material_form.html', context)
