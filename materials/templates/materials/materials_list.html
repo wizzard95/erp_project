@@ -47,8 +47,9 @@
                 Export csv
             </a>
         </div>
-
+        {% if permissions.materials >= 2 %}
         <a href="{% url 'materials:material_create' %}" class="bg-[#233b6e] text-white font-semibold py-2 px-6 rounded-lg text-center transition-colors duration-300 hover:bg-[#1a2c53]">Create New Material</a>
+        {% endif %}
     </div>
 </div>    
 </form>
