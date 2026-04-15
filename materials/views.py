@@ -120,13 +120,13 @@ def material_edit(request, pk):
         if form.is_valid():
             form.save()
             return redirect('materials:materials_list')
-        else:
-            form = MaterialForm(instance=material)
+    else:
+        form = MaterialForm(instance=material)
 
-        context = {
-            'form': form,
-            'material': material,
-        }
+    context = {
+        'form': form,
+        'material': material,
+    }
         # ? renderizamos con toda la informacion 
     return render(request, 'materials/material_form.html', context)
 
