@@ -18,7 +18,6 @@ class RoleAdmin(admin.ModelAdmin):
     list_display = ('role_name', 'customers', 'suppliers', 'materials', 'purchases', 'sales')
     list_filter = ('customers', 'suppliers', 'materials', 'purchases', 'sales')
     search_fields = ('role_name',)
-    readonly_fields = ('role_name',)
 
 @admin.register(UserRole)
 class UserRoleAdmin(admin.ModelAdmin):
