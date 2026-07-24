@@ -24,4 +24,5 @@ class SupplierForm(forms.ModelForm):
                     'currency',
                     'payment_method',
                     'bank_account',
+                    'status'
                     ]

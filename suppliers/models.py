@@ -7,8 +7,8 @@ from django.conf import settings
 # Create your models here.
 class Suppliers(models.Model):
 
-    id_supplier = models.CharField(max_length=50, null= True, unique=True,verbose_name="Supplier ID")
-    legal_name = models.CharField(max_length=100, verbose_name="Legal Name")
+    id_supplier = models.CharField(max_length=50, unique=True,verbose_name="Supplier ID")
+    legal_name = models.CharField(max_length=100, blank=True, verbose_name="Legal Name")
     name = models.CharField(max_length=100, verbose_name="Name")
     tax_id = models.CharField(max_length=30, verbose_name="Tax ID")
     country = models.CharField(max_length=60, verbose_name="Country")
